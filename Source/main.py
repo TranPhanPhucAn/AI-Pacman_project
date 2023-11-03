@@ -1,7 +1,8 @@
 import pygame
 import sys
 import copy
-import time 
+import time
+import random
 from level1_2 import chooseLevel
 from level3 import ingame, plusPadding, inputMaze
 from level4 import readFile, getInfo, level4
@@ -44,36 +45,41 @@ class sprite:
         self.currentPosition = position
         self.surface = pygame.Surface((one_block_size,one_block_size))
         self.surface.fill(BLACK)
+
     def changePosition(self, newPosition):
         self.currentPosition = newPosition
     def draw(self):
+        screen.blit(self.surface, (self.currentPosition[1]*one_block_size, self.currentPosition[0]*one_block_size))
+    def display(self):
         screen.blit(self.surface, (self.currentPosition[1]*one_block_size, self.currentPosition[0]*one_block_size))
 
 class Wall(sprite):
     def __init__(self, position) -> None:
         super().__init__(position)
-        pygame.draw.rect(self.surface, WALL_COLOR ,(0,0,30,30), 2)
-        self.draw()
+        self.surface = pygame.image.load(f'../Assests/wall_img1.gif')
+        self.display()
+
+
 
 class Ghost(sprite):
     def __init__(self, position) -> None:
         super().__init__(position)
-        pygame.draw.circle(self.surface, GHOST_COLOR,((one_block_size)/2,(one_block_size)/2), one_block_size / 2, 0)
-        self.draw()
+        self.surface = pygame.image.load(f'../Assests/monster.gif')
+        self.display()
         
 
 class Pacman(sprite):
     DEAD = False
     def __init__(self, position) -> None:
         super().__init__(position)
-        pygame.draw.circle(self.surface, PACMAN_COLOR,((one_block_size)/2,(one_block_size)/2), one_block_size / 2, 0)
-        self.draw()
+        self.surface = pygame.image.load(f'../Assests/pacman_right.gif')
+        self.display()
     
 class Food(sprite):
     def __init__(self, position) -> None:
         super().__init__(position)
-        pygame.draw.circle(self.surface, FOODS_COLOR,((one_block_size)/2,(one_block_size)/2), one_block_size / 4, 0)
-        self.draw()
+        self.surface = pygame.image.load(f'../Assests/food.gif')
+        self.display()
 
 class Game:
     Foods = []
@@ -181,7 +187,9 @@ def drawScore():
 def handle_input():
     level = int(input("Enter the level (1, 2, 3, 4): "))
     map_name = input("Enter map name: ")
-    map_name = '../Input/' + map_name
+    # map_name = '../Input/' + map_name
+    map_name = f'../Input/map{map_name}_level{level}.txt'
+
     if level not in [1, 2, 3, 4]:
         return None, None, None, None
     
@@ -196,19 +204,22 @@ def handle_input():
     for line in file:
         if idx == 0:
             size = line.split()
-        elif idx == cnt_line - 1:
-            position = line.split()
         else:
             MAP.append([int(x) for x in line.split()])
         idx += 1
+
+
     file.close()
-    
     size_x = int(size[0])
     size_y = int(size[1])
-
-    x = int(position[0])
-    y = int(position[1])
-    pos = [x, y]
+    random.seed(int(time.time()))
+    x = random.randint(1, size_x - 1)
+    y = random.randint(1, size_y - 1)
+    while MAP[y][x] != 0:
+        x = random.randint(1, size_x - 1)
+        y = random.randint(1, size_y - 1)
+        print('check x:', x, 'check y:', y)
+    pos = [y, x]
 
     return size_x, size_y, MAP, pos, level, map_name #map_name này cho level 3 của Phát
     
