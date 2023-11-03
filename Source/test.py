@@ -18,9 +18,9 @@ RED = (255, 0, 0)
 font = pygame.font.Font(None, 36)
 
 # Tạo đối tượng menu
-menu_items = ["Level", "Members", "Quit"]
-level_items = ['Level 1', 'Level 2', 'Level 3', 'Level 4']
-map_items = ['Map 1', 'Map 2']
+menu_items = ["Level", "Members", "Exit"]
+level_items = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Return']
+map_items = ['Map 1', 'Map 2', 'Return']
 
 selected_item = 0
 def draw_item(list_item, selected_item):
@@ -33,15 +33,20 @@ def draw_item(list_item, selected_item):
     # Cập nhật cửa sổ
     pygame.display.update()
 
-def menu(list_item, selected_item):
+level = 0
+map = 0
+map_name = f'../Input/map{map}_level{level}.txt'
+
+
+def handle_event(event, selected_item):
+
+def menu(list_item, selected_item, level, map):
     running = True
     while running:
         for event in pygame.event.get():
-
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-
                 if event.key == pygame.K_UP:
                     selected_item = (selected_item - 1) % len(list_item)
                 elif event.key == pygame.K_DOWN:
@@ -50,9 +55,9 @@ def menu(list_item, selected_item):
 
                     if selected_item == 0:  # Start
                         if list_item == menu_items:
-                            menu(level_items, selected_item)
+                            menu(level_items, selected_item, level, map)
                         elif list_item == level_items:
-                            menu(map_items, selected_item)
+                            menu(map_items, selected_item, level, map)
                     elif selected_item == 1:  # Options
                         print("Members")
                     elif selected_item == len(list_item) - 1:  # Quit
@@ -63,10 +68,9 @@ def menu(list_item, selected_item):
 
         # Vẽ các mục menu
         draw_item(list_item, selected_item)
+    return level, map
 
-
-menu(menu_items, selected_item)
-
+level, map = menu(menu_items, selected_item, level, map)
 
 pygame.quit()
 sys.exit()

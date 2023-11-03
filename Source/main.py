@@ -208,13 +208,13 @@ def handle_input():
             MAP.append([int(x) for x in line.split()])
         idx += 1
 
-
     file.close()
     size_x = int(size[0])
     size_y = int(size[1])
     random.seed(int(time.time()))
     x = random.randint(1, size_x - 1)
     y = random.randint(1, size_y - 1)
+
     while MAP[y][x] != 0:
         x = random.randint(1, size_x - 1)
         y = random.randint(1, size_y - 1)
