@@ -3,6 +3,8 @@ import sys
 import copy
 import time
 import random
+import Menu
+
 from level1_2 import chooseLevel
 from level3 import ingame, plusPadding, inputMaze
 from level4 import readFile, getInfo, level4
@@ -58,8 +60,6 @@ class Wall(sprite):
         super().__init__(position)
         self.surface = pygame.image.load(f'../Assests/wall_img1.gif')
         self.display()
-
-
 
 class Ghost(sprite):
     def __init__(self, position) -> None:
@@ -168,14 +168,6 @@ class Game:
             temp.currentPosition = ghost.currentPosition
             temp.draw()
 
-# vòng lặp là:
-#     while true:
-#         xóa màn hình vị trí pacman và ghost
-#         Pacman di chuyển -> kiểm tra ăn được thức ăn ko, kiểm tra có ăn ma không
-#         Ghost di chuyển -> kiểm tra có ăn được pacman ko
-#         Vẽ Pacman và Ghost
-#         checkFinish dừng vòng lặp
-
 def drawScore():
     text_font = pygame.font.SysFont("Arial", 36)
     surface = pygame.Surface((10*one_block_size,2*one_block_size))
@@ -185,20 +177,20 @@ def drawScore():
     screen.blit(score, (one_block_size, m*one_block_size))
 
 def handle_input():
-    level = int(input("Enter the level (1, 2, 3, 4): "))
-    map_name = input("Enter map name: ")
-    # map_name = '../Input/' + map_name
-    map_name = f'../Input/map{map_name}_level{level}.txt'
+    level, map = Menu.init_menu()
+    level = int(level)
+    map_name = f'../Input/map{map}_level{level}.txt'
 
     if level not in [1, 2, 3, 4]:
-        return None, None, None, None
-    
-    file = open (map_name, 'r') 
-        #count number of line
-    cnt_line = len(file.readlines())
-    file.close()
+        return None, None, None, None, None, None
+
+    # file = open (map_name, 'r')
+    # # count number of line
+    # cnt_line = len(file.readlines())
+    # file.close()
 
     file = open(map_name, 'r')
+    print(map_name)
     MAP = []
     idx = 0
     for line in file:
@@ -221,17 +213,16 @@ def handle_input():
         print('check x:', x, 'check y:', y)
     pos = [y, x]
 
-    return size_x, size_y, MAP, pos, level, map_name #map_name này cho level 3 của Phát
-    
+    return size_x, size_y, MAP, pos, level, map_name
 def menu():
     n, m, matrix, pacman, level, map_name = handle_input()
     path_ghost = None
     point = 0
+    path = []
     if level == 1 or level == 2:
         #cái này chỉ để lấy path thôi
         path = chooseLevel(level, n, m, matrix, pacman)
     elif level == 3:
-        #cái này là làm theo cách chạy hàm của Hòa
         currghost,initialghost = [],[]
         food = 0
         for i in range(len(matrix)):
@@ -286,7 +277,6 @@ def drawFinish(state):
     
 if __name__ == "__main__":
     n, m, matrix, pacman, point, path, path_ghost, level = menu()
-    
     SCREEN_HEIGHT = (m + 2)*one_block_size
     SCREEN_WIDTH = n*one_block_size
     screen, clock = initGameScreen()
@@ -297,12 +287,6 @@ if __name__ == "__main__":
     ghostmove = 0
     idx = 0
     while True:
-        # print("pacmanPosiiton")
-        # print(game.Player.currentPosition)
-        # print("GhostPoisition")
-        # for ghost in game.Ghosts:
-        #     print(ghost.currentPosition)
-        # input("vongn")
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
                 pygame.quit()
