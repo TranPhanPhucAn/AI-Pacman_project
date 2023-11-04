@@ -1,12 +1,12 @@
 import pygame
 import sys
 
-one_block_size = 30 #pixel
+one_block_size = 30
 SCREEN_HEIGHT = 20 * one_block_size
 SCREEN_WIDTH = SCREEN_HEIGHT * 2
 
 def init_menu():
-    window_size = (SCREEN_HEIGHT, SCREEN_HEIGHT)
+    window_size = (SCREEN_WIDTH, SCREEN_HEIGHT)
     screen = pygame.display.set_mode(window_size)
     pygame.display.set_caption("Menu")
 
@@ -16,10 +16,8 @@ def init_menu():
 
     font = pygame.font.init()
     font = pygame.font.SysFont("Arial", 36)
-    # font = pygame.font.init()
-    # font = pygame.font.SysFont(f'../Font/emulogic.ttf', 36)
 
-    menu_items = ["Level", "Members", "Exit"]
+    menu_items = ["Play", "About us", "Exit"]
     level_items = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Return']
     list_members = [
         '21120407 - Tran Phan Phuc An',
@@ -31,12 +29,17 @@ def init_menu():
     ]
     map_items = ['Map 1', 'Map 2', 'Return']
 
+    arrow = pygame.Surface((20, 20), pygame.SRCALPHA)
+    pygame.draw.polygon(arrow, YELLOW, [(0, 0), (20, 10), (0, 20)])
+
     def draw_list(list_item, selected_item):
         for i, item in enumerate(list_item):
             text = font.render(item, True, YELLOW if i == selected_item else WHITE)
             text_rect = text.get_rect()
             text_rect.center = (window_size[0] // 2, window_size[1] // 2 + i * 40)
             screen.blit(text, text_rect)
+            if i == selected_item:
+                screen.blit(arrow, (text_rect[0] - 30, text_rect[1] + 10))
 
         pygame.display.update()
 

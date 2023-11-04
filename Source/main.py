@@ -17,13 +17,9 @@ SCREEN_WIDTH = SCREEN_HEIGHT * 2
 #SOME VARIABLE 
 GAME_NAME = 'Pacman'
 FPS = 30
-running = True
 
-#SET COLORS
-WALL_COLOR = (3, 64, 214)
 GHOST_COLOR = (255, 0, 0) #red
 PACMAN_COLOR = (255,255,0)
-FOODS_COLOR = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 #CheckFinish
@@ -58,13 +54,13 @@ class sprite:
 class Wall(sprite):
     def __init__(self, position) -> None:
         super().__init__(position)
-        self.surface = pygame.image.load(f'../Assests/wall_img1.gif')
+        self.surface = pygame.image.load(f'../Assets/wall_img1.png')
         self.display()
 
 class Ghost(sprite):
     def __init__(self, position) -> None:
         super().__init__(position)
-        self.surface = pygame.image.load(f'../Assests/monster.gif')
+        self.surface = pygame.image.load(f'../Assets/monster.png')
         self.display()
         
 
@@ -72,13 +68,13 @@ class Pacman(sprite):
     DEAD = False
     def __init__(self, position) -> None:
         super().__init__(position)
-        self.surface = pygame.image.load(f'../Assests/pacman_right.gif')
+        self.surface = pygame.image.load(f'../Assets/pacman_right.png')
         self.display()
     
 class Food(sprite):
     def __init__(self, position) -> None:
         super().__init__(position)
-        self.surface = pygame.image.load(f'../Assests/food.gif')
+        self.surface = pygame.image.load(f'../Assets/food.png')
         self.display()
 
 class Game:
@@ -269,11 +265,13 @@ def menu():
 def drawFinish(state): 
     text_font = pygame.font.SysFont("Arial", 36)
     if state == WIN:
+        image = pygame.image.load(f'../Assets/victory_bg.jpg')
         text = text_font.render("WIN", True, PACMAN_COLOR)
     else:
         text = text_font.render("LOSE", True, GHOST_COLOR)
 
-    screen.blit(text, ((n/2 - 1)*one_block_size, m*one_block_size))
+
+    screen.blit(image, ((n/2 - 1)*one_block_size, m*one_block_size))
     
 if __name__ == "__main__":
     n, m, matrix, pacman, point, path, path_ghost, level = menu()
