@@ -181,7 +181,6 @@ def handle_input():
         return None, None, None, None, None, None
 
     file = open(map_name, 'r')
-    print(map_name)
     MAP = []
     idx = 0
     for line in file:
@@ -200,7 +199,6 @@ def handle_input():
     while MAP[y][x] != 0 and MAP[y][x]!=2:
         x = random.randint(1, size_x - 1)
         y = random.randint(1, size_y - 1)
-        print('check x:', x, 'check y:', y)
     pos = [y, x]
 
     return size_x, size_y, MAP, pos, level, map_name

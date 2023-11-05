@@ -47,7 +47,7 @@ def detec_food(MAP,size_x,size_y):
                 return (i,j)
 
 def manhattan_dis(start_x,start_y,des_x,des_y):
-    return (abs(des_x-start_x)+abs(des_x-des_y))
+    return (abs(des_x-start_x)+abs(start_y-des_y))
 
 def level_1(MAP,pos,size_x,size_y):
     visited=[]
