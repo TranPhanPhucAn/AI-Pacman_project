@@ -278,6 +278,8 @@ def drawFinish(state):
     
 if __name__ == "__main__":
     n, m, matrix, pacman, point, path, path_ghost, level = menu()
+    if m is None or n is None:
+        sys.exit(1)
     SCREEN_HEIGHT = (m + 2)*one_block_size
     SCREEN_WIDTH = n*one_block_size
     screen, clock = initGameScreen()
