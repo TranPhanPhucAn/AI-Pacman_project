@@ -260,13 +260,19 @@ def menu():
 def drawFinish(state): 
     text_font = pygame.font.SysFont("Arial", 36)
     if state == WIN:
-        image = pygame.image.load(f'../Assets/victory_bg.jpg')
-        text = text_font.render("WIN", True, PACMAN_COLOR)
+        image = pygame.image.load(r"../Assets/victory_bg.png")
+        image.convert_alpha()
+        image = pygame.transform.scale(image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        # text = text_font.render("WIN", True, PACMAN_COLOR)
     else:
-        text = text_font.render("LOSE", True, GHOST_COLOR)
+        image = pygame.image.load(r"../Assets/gameover_bg.png")
+        image.convert_alpha()
+        image = pygame.transform.scale(image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        # text = text_font.render("LOSE", True, GHOST_COLOR)
 
 
-    screen.blit(image, ((n/2 - 1)*one_block_size, m*one_block_size))
+    screen.blit(image, (0, 0))
+    # screen.blit(text, ((n/2 - 1)*one_block_size, m*one_block_size))
     
 if __name__ == "__main__":
     n, m, matrix, pacman, point, path, path_ghost, level = menu()

@@ -12,11 +12,13 @@ def init_menu():
     WHITE = (255, 255, 255)
     YELLOW = (255, 255, 0)
     BLACK = (0, 0, 0)
+
     home_background = pygame.image.load(r"../Assets/bg.png")
     home_background.convert_alpha()
     home_background = pygame.transform.scale(home_background, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
     font = pygame.font.init()
-    font = pygame.font.SysFont("Arial", 50)
+    font = pygame.font.SysFont("Arial", 36)
 
     menu_items = ["Play", "About us", "Exit"]
     level_items = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Return']
