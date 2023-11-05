@@ -47,6 +47,7 @@ def init_menu():
         selected_item = 0
         running = True
         while running:
+            # print(level,map)
             if level != 0 and map != 0:
                 break
             for event in pygame.event.get():

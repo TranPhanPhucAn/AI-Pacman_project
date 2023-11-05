@@ -202,8 +202,7 @@ def handle_input():
     random.seed(int(time.time()))
     x = random.randint(1, size_x - 1)
     y = random.randint(1, size_y - 1)
-
-    while MAP[y][x] != 0:
+    while MAP[y][x] != 0 and MAP[y][x]!=2:
         x = random.randint(1, size_x - 1)
         y = random.randint(1, size_y - 1)
         print('check x:', x, 'check y:', y)
@@ -253,12 +252,15 @@ def menu():
     elif level == 4:
         #cái này là làm theo cách chạy hàm của Phát
         path_file =  str(map_name)
-        map = readFile(path_file)
+        map = readFile(path_file)#bug here
+
         inf = getInfo(map)
+
         output = level4(map, inf[1], inf[0], pacman)
         point = output[0]
         path = output[1]
         path_ghost = output[2]
+
     #Trả về kích thước x, y, vị trí pacman, điểm, path_ghost, level
     return n, m, matrix, pacman, point, path, path_ghost, level
 

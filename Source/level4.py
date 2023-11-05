@@ -8,16 +8,17 @@ def readFile(path):#'./Input/input.txt'
     f = open(path, 'r')
 
     size = [int (x) for x in f.readline().strip().split(' ')]
+    # print(size)
     Nrow = size[0]
     Ncol = size[1]
 
     adjacencyMatrix = []
     for i in range(Ncol):
         adjacencyMatrix.append(f.readline().rstrip('\n').split())
-    
-    pos = [int (x) for x in f.readline().strip().split(' ')]
-    pacmanX = pos[0]
-    pacmanY = pos[1]
+
+    # pos = [int (x) for x in f.readline().strip().split(' ')]
+    # pacmanX = pos[0]
+    # pacmanY = pos[1]
     
     f.close()
     for x in range(len(adjacencyMatrix)):
