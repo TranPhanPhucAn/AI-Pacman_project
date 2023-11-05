@@ -9,13 +9,14 @@ def init_menu():
     window_size = (SCREEN_WIDTH, SCREEN_HEIGHT)
     screen = pygame.display.set_mode(window_size)
     pygame.display.set_caption("Menu")
-
     WHITE = (255, 255, 255)
     YELLOW = (255, 255, 0)
     BLACK = (0, 0, 0)
-
+    home_background = pygame.image.load(r"../Assets/bg.png")
+    home_background.convert_alpha()
+    home_background = pygame.transform.scale(home_background, (SCREEN_WIDTH, SCREEN_HEIGHT))
     font = pygame.font.init()
-    font = pygame.font.SysFont("Arial", 36)
+    font = pygame.font.SysFont("Arial", 50)
 
     menu_items = ["Play", "About us", "Exit"]
     level_items = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Return']
@@ -36,16 +37,16 @@ def init_menu():
         for i, item in enumerate(list_item):
             text = font.render(item, True, YELLOW if i == selected_item else WHITE)
             text_rect = text.get_rect()
-            text_rect.center = (window_size[0] // 2, window_size[1] // 2 + i * 40)
+            text_rect.center = (window_size[0] // 2, window_size[1] // 1.75 + i * 40)
             screen.blit(text, text_rect)
             if i == selected_item:
                 screen.blit(arrow, (text_rect[0] - 30, text_rect[1] + 10))
-
         pygame.display.update()
 
     def menu_list(list_item, level=0, map=0):
         selected_item = 0
         running = True
+
         while running:
             if level != 0 and map != 0:
                 break
@@ -75,7 +76,8 @@ def init_menu():
                                 map = map_items[selected_item].split(' ')[1]
 
             screen.fill(BLACK)
-
+            screen.blit(home_background, (0, 0))
             draw_list(list_item, selected_item)
+
         return level, map
     return menu_list(menu_items)

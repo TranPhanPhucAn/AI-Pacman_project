@@ -180,11 +180,6 @@ def handle_input():
     if level not in [1, 2, 3, 4]:
         return None, None, None, None, None, None
 
-    # file = open (map_name, 'r')
-    # # count number of line
-    # cnt_line = len(file.readlines())
-    # file.close()
-
     file = open(map_name, 'r')
     print(map_name)
     MAP = []
@@ -251,7 +246,7 @@ def menu():
         pacman[0] -=2
         pacman[1] -=2
     elif level == 4:
-        #cái này là làm theo cách chạy hàm của Phát
+
         path_file =  str(map_name)
         map = readFile(path_file)
         inf = getInfo(map)
