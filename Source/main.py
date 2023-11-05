@@ -180,11 +180,6 @@ def handle_input():
     if level not in [1, 2, 3, 4]:
         return None, None, None, None, None, None
 
-    # file = open (map_name, 'r')
-    # # count number of line
-    # cnt_line = len(file.readlines())
-    # file.close()
-
     file = open(map_name, 'r')
     print(map_name)
     MAP = []
@@ -250,7 +245,7 @@ def menu():
         pacman[0] -=2
         pacman[1] -=2
     elif level == 4:
-        #cái này là làm theo cách chạy hàm của Phát
+
         path_file =  str(map_name)
         map = readFile(path_file)#bug here
 
@@ -267,13 +262,19 @@ def menu():
 def drawFinish(state): 
     text_font = pygame.font.SysFont("Arial", 36)
     if state == WIN:
-        image = pygame.image.load(f'../Assets/victory_bg.jpg')
-        text = text_font.render("WIN", True, PACMAN_COLOR)
+        image = pygame.image.load(r"../Assets/victory_bg.png")
+        image.convert_alpha()
+        image = pygame.transform.scale(image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        # text = text_font.render("WIN", True, PACMAN_COLOR)
     else:
-        text = text_font.render("LOSE", True, GHOST_COLOR)
+        image = pygame.image.load(r"../Assets/gameover_bg.png")
+        image.convert_alpha()
+        image = pygame.transform.scale(image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+        # text = text_font.render("LOSE", True, GHOST_COLOR)
 
 
-    screen.blit(image, ((n/2 - 1)*one_block_size, m*one_block_size))
+    screen.blit(image, (0, 0))
+    # screen.blit(text, ((n/2 - 1)*one_block_size, m*one_block_size))
     
 if __name__ == "__main__":
     n, m, matrix, pacman, point, path, path_ghost, level = menu()
