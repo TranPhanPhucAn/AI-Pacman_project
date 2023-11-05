@@ -1,9 +1,7 @@
 import pygame
-import sys
+from constants import *
 
-one_block_size = 30
-SCREEN_HEIGHT = 20 * one_block_size
-SCREEN_WIDTH = SCREEN_HEIGHT * 2
+
 
 def init_menu():
     window_size = (SCREEN_WIDTH, SCREEN_HEIGHT)

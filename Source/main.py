@@ -9,23 +9,7 @@ from level1_2 import chooseLevel
 from level3 import ingame, plusPadding, inputMaze
 from level4 import readFile, getInfo, level4
 
-#SET SIZE
-one_block_size = 30 #pixel
-SCREEN_HEIGHT = 20 * one_block_size
-SCREEN_WIDTH = SCREEN_HEIGHT * 2
-
-#SOME VARIABLE 
-GAME_NAME = 'Pacman'
-FPS = 30
-
-GHOST_COLOR = (255, 0, 0) #red
-PACMAN_COLOR = (255,255,0)
-BLACK = (0, 0, 0)
-
-#CheckFinish
-WIN = 0
-LOSE = 1
-CONTINUE = 2
+from constants import *
 
 def initGameScreen():
     pygame.init()
