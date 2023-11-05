@@ -155,25 +155,29 @@ def handle_input():
         return None, None, None, None, None, None
 
     file = open(map_name, 'r')
+    # count number of line
+    cnt_line = len(file.readlines())
+    file.close()
+
+    file = open(map_name, 'r')
     MAP = []
     idx = 0
     for line in file:
         if idx == 0:
             size = line.split()
+        elif idx == cnt_line - 1:
+            position = line.split()
         else:
             MAP.append([int(x) for x in line.split()])
         idx += 1
-
     file.close()
+
     size_x = int(size[0])
     size_y = int(size[1])
-    random.seed(int(time.time()))
-    x = random.randint(1, size_x - 1)
-    y = random.randint(1, size_y - 1)
-    while MAP[y][x] != 0 and MAP[y][x]!=2:
-        x = random.randint(1, size_x - 1)
-        y = random.randint(1, size_y - 1)
-    pos = [y, x]
+
+    x = int(position[0])
+    y = int(position[1])
+    pos = [x, y]
 
     return size_x, size_y, MAP, pos, level, map_name
 def menu():
