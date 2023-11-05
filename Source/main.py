@@ -68,7 +68,10 @@ class Pacman(sprite):
     DEAD = False
     def __init__(self, position) -> None:
         super().__init__(position)
-        self.surface = pygame.image.load(f'../Assets/pacman_right.png')
+        self.display()
+
+    def set_direction(self, path):
+        self.surface = pygame.image.load(path)
         self.display()
     
 class Food(sprite):
@@ -107,31 +110,22 @@ class Game:
         
 
     def ghostMove(self, position, idx):
-        # position = functionn to move
-        # print(position)
-        # input(222)
-        # newPosition = position
         self.Ghosts[idx].changePosition(position)
 
-        # self.Player.DEAD = self.checkColision()
-        # self.checkGameFinish()
-        # self.Player.currentPosition(-1,-1)
         
 
     def pacmanMove(self, position):
-        # position = functionn to move
         newPosition = position
+        if (newPosition[0] - self.Player.currentPosition[0] == 1):
+            self.Player.set_direction(f'../Assets/pacman_bottom.gif')
+        elif newPosition[0] - self.Player.currentPosition[0] == -1:
+            self.Player.set_direction(f'../Assets/pacman_top.gif')
+        elif newPosition[1] - self.Player.currentPosition[1] == 1:
+            self.Player.set_direction(f'../Assets/pacman_right.png')
+        elif newPosition[1] - self.Player.currentPosition[1] == -1:
+            self.Player.set_direction(f'../Assets/pacman_left.gif')
 
         self.Player.changePosition(newPosition)
-
-        # isPacmanEatGhost, ghostIndex = self.checkColision()
-        # if isPacmanEatGhost:
-        #     self.Ghosts.pop(ghostIndex)
-
-        # isPacmanDead = self.checkColision()
-        # if isPacmanDead:
-        #     self.Player.DEAD = True
-        #     self.checkGameFinish()
 
         isPacmanEatFood, foodIndex = self.checkEatFood()
         if isPacmanEatFood:
@@ -142,10 +136,6 @@ class Game:
         self.Point -= 1
 
     def checkColision(self):
-        # for ghost in self.Ghosts:
-        #     if ghost.currentPosition == self.Player.currentPosition:
-        #         return True, self.Ghosts.index(ghost)
-        # return False, -1
         for ghost in self.Ghosts:
             if ghost.currentPosition[0] == self.Player.currentPosition[0] and ghost.currentPosition[1] == self.Player.currentPosition[1]:
                 return True
@@ -222,13 +212,7 @@ def menu():
                     food+=1
         pacman[0] +=2
         pacman[1] +=2
-        # print(pacman)
-        # print(food)
-        # print(currghost)
-        # input("test")
-        board=plusPadding(copy.deepcopy(matrix))                        #tạo padding 
-        # print(board)
-        # input(board)
+        board=plusPadding(copy.deepcopy(matrix))
         actionsPacman,path_ghost=ingame(pacman, board, currghost,initialghost,food)
         path = []
         for item in actionsPacman:
@@ -263,16 +247,13 @@ def drawFinish(state):
         image = pygame.image.load(r"../Assets/victory_bg.png")
         image.convert_alpha()
         image = pygame.transform.scale(image, (SCREEN_WIDTH, SCREEN_HEIGHT))
-        # text = text_font.render("WIN", True, PACMAN_COLOR)
     else:
         image = pygame.image.load(r"../Assets/gameover_bg.png")
         image.convert_alpha()
         image = pygame.transform.scale(image, (SCREEN_WIDTH, SCREEN_HEIGHT))
-        # text = text_font.render("LOSE", True, GHOST_COLOR)
 
 
     screen.blit(image, (0, 0))
-    # screen.blit(text, ((n/2 - 1)*one_block_size, m*one_block_size))
     
 if __name__ == "__main__":
     n, m, matrix, pacman, point, path, path_ghost, level = menu()
@@ -293,10 +274,16 @@ if __name__ == "__main__":
                 pygame.quit()
                 sys.exit(0)
         for food in game.Foods:
-            food.draw()  
+            food.draw()
+
+        old_pacman_position = game.Player.currentPosition
+
         game.clearAnimation()
         game.pacmanMove(path[idx])
         game.Player.draw()
+
+        old_pacman_sprite = sprite(old_pacman_position)
+        old_pacman_sprite.draw()
 
         game.Player.DEAD = game.checkColision()
         if game.checkColision():
@@ -318,9 +305,7 @@ if __name__ == "__main__":
                 game.Ghosts[path_idx].draw()
             ghostmove += 1
         
-            # print(gsm])
-            # print(pacman)
-            # input(1)
+
         
         game.Player.DEAD = game.checkColision()
         if game.checkColision():
@@ -347,5 +332,4 @@ if __name__ == "__main__":
     drawFinish(state)
     pygame.display.update()
     time.sleep(5)
-    # print(isFinsihed, state)
 
