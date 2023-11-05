@@ -153,7 +153,8 @@ def handle_input():
 
     if level not in [1, 2, 3, 4]:
         return None, None, None, None, None, None
-
+    if map==0 or level==0:
+        sys.exit(1)
     file = open(map_name, 'r')
     # count number of line
     cnt_line = len(file.readlines())
