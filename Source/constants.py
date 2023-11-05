@@ -1,3 +1,4 @@
+
 # Set size
 one_block_size = 30
 SCREEN_HEIGHT = 20 * one_block_size
