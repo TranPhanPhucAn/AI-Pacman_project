@@ -1,6 +1,7 @@
 from Sprite import Sprite
 from Game import Game
 from Screen import *
+import time
 
 if __name__ == "__main__":
     n, m, matrix, pacman, point, path, path_ghost, level = menu()

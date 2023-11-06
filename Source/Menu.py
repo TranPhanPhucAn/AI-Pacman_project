@@ -28,7 +28,7 @@ def init_menu():
         '21120539 - Tran Minh Quang',
         'Return'
     ]
-    map_items = ['Map 1', 'Map 2', 'Return']
+    map_items = ['Map 1', 'Map 2', 'Map 3', 'Map 4', 'Map 5', 'Return']
 
     arrow = pygame.Surface((20, 20), pygame.SRCALPHA)
     pygame.draw.polygon(arrow, YELLOW, [(0, 0), (20, 10), (0, 20)])
@@ -78,7 +78,7 @@ def init_menu():
 
             screen.fill(BLACK)
             screen.blit(home_background, (0, 0))
-            if list_item == list_members:
+            if list_item == list_members or list_item == map_items:
                 draw_list(list_item, selected_item, 40)
             elif list_item == level_items:
                 draw_list(list_item, selected_item, 50)

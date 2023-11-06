@@ -2,10 +2,7 @@ import math
 import copy
 import pygame
 
-
-# PHẦN NHẬP TỪ FILE
-# ----------------------------------------------------------------
-def readFile(path):  # './Input/input.txt'
+def readFile(path):
     global pacmanX, pacmanY
     f = open(path, 'r')
 
@@ -18,9 +15,6 @@ def readFile(path):  # './Input/input.txt'
     for i in range(Ncol):
         adjacencyMatrix.append(f.readline().rstrip('\n').split())
 
-    # pos = [int (x) for x in f.readline().strip().split(' ')]
-    # pacmanX = pos[0]
-    # pacmanY = pos[1]
 
     f.close()
     for x in range(len(adjacencyMatrix)):
@@ -44,9 +38,7 @@ def getInfo(map):
     return (monsters, numOfFood)
 
 
-# PHẦN THUẬT TOÁN
-# ----------------------------------------------------------------
-# hàm cho ma di chuyển
+
 def monstersMove(map, monsterPos, pacman):
     if monsterPos[0] == pacman[0] and monsterPos[1] == pacman[1]:
         return (monsterPos[0], monsterPos[1])
@@ -75,7 +67,7 @@ def monstersMove(map, monsterPos, pacman):
     return option[shortest]
 
 
-# hàm kiểm tra đụng nhau chưa
+
 def isCollide(pacman, monsters):  # hàm kiểm tra xem có va chạm với quái vật chưa
     for m in monsters:
         if m[0] == pacman[0] and m[1] == pacman[1]:
