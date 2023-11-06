@@ -10,7 +10,10 @@ class Sprite:
         self.surface.fill(BLACK)
 
     def changePosition(self, newPosition):
+        if (newPosition == self.currentPosition):
+            pass
         self.currentPosition = newPosition
+        print(f'Current position of Pacman: {self.currentPosition[0]}, {self.currentPosition[1]}')
 
     def draw(self):
         screen.blit(self.surface, (self.currentPosition[1] * one_block_size, self.currentPosition[0] * one_block_size))

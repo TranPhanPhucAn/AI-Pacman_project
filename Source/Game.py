@@ -49,7 +49,6 @@ class Game:
             self.Player.set_direction(f'../Assets/pacman_right.png')
         elif newPosition[1] - self.Player.currentPosition[1] == -1:
             self.Player.set_direction(f'../Assets/pacman_left.gif')
-
         self.Player.changePosition(newPosition)
 
         isPacmanEatFood, foodIndex = self.checkEatFood()

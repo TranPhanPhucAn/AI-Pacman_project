@@ -13,6 +13,7 @@ if __name__ == "__main__":
     pygame.display.update()
     ghostmove = 0
     idx = 0
+    print('Running process:')
     while True:
         for event in pygame.event.get():
             if (event.type == pygame.QUIT):
@@ -22,7 +23,6 @@ if __name__ == "__main__":
             food.draw()
 
         old_pacman_position = game.Player.currentPosition
-
         game.clearAnimation()
         game.pacmanMove(path[idx])
         game.Player.draw()
@@ -35,7 +35,7 @@ if __name__ == "__main__":
             for ghost in game.Ghosts:
                 ghost.draw()
             break
-        # #level để kiểm tra xem có vẽ ma hay không
+
         if level == 2:
             for ghost in game.Ghosts:
                 ghost.draw()
@@ -52,7 +52,6 @@ if __name__ == "__main__":
 
         game.Player.DEAD = game.checkColision()
         if game.checkColision():
-            print(game.Player.DEAD)
             break
 
         drawScore(m, game)
