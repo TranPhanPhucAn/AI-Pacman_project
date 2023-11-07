@@ -13,8 +13,12 @@ class Game:
     Player = -1
     Point = 0
 
-    def __init__(self, Matrix, pacman) -> None:
+    def __init__(self, Matrix, pacman, monsters = []) -> None:
         self.Player = Pacman(pacman)
+        for i in monsters:
+            temp=Ghost(i)
+            self.Ghosts.append(temp)
+
         for row in range(len(Matrix)):
             for column in range(len(Matrix[row])):
                 if Matrix[row][column] == 1:
