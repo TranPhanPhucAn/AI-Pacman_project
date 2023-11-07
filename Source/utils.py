@@ -35,3 +35,47 @@ def handle_input():
     pos = [x, y]
 
     return size_x, size_y, MAP, pos, level, map_name
+
+def getInfo(map):
+    monsters = []
+    numOfFood = 0
+    for x in range(len(map)):
+        for y in range(len(map[x])):
+            if map[x][y] == 3:
+                map[x][y] = 0
+                monsters.append((x, y))
+            elif map[x][y] == 2:
+                numOfFood += 1
+    return (monsters, numOfFood)
+
+
+def monstersMove(map, monsterPos, pacman):
+    if monsterPos[0] == pacman[0] and monsterPos[1] == pacman[1]:
+        return (monsterPos[0], monsterPos[1])
+
+    option = []
+    # thêm các ô lân cận nếu không phải tường
+    if int(map[monsterPos[0] - 1][monsterPos[1]]) != 1:
+        option.append((monsterPos[0] - 1, monsterPos[1]))
+    if int(map[monsterPos[0]][monsterPos[1] + 1]) != 1:
+        option.append((monsterPos[0], monsterPos[1] + 1))
+    if int(map[monsterPos[0] + 1][monsterPos[1]]) != 1:
+        option.append((monsterPos[0] + 1, monsterPos[1]))
+    if int(map[monsterPos[0]][monsterPos[1] - 1]) != 1:
+        option.append((monsterPos[0], monsterPos[1] - 1))
+
+    distance = []
+    for x in option:
+        distance.append(((x[0] - pacman[0]) ** 2 + (x[1] - pacman[1]) ** 2))
+
+    shortest = distance.index(min(distance))
+
+    return option[shortest]
+
+
+
+def checkColision(pacman, monsters):
+    for m in monsters:
+        if m[0] == pacman[0] and m[1] == pacman[1]:
+            return True
+    return False

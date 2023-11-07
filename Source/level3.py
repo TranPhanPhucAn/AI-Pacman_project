@@ -10,27 +10,6 @@ import copy
     Monsters just move one step in any valid direction (if any) around the initial location at the start of the game.
     Each step Pacman go, each step Monsters move.
 """
-def inputMaze(filename):
-    f = open(filename, mode='r')
-    content = f.readline()
-    size = re.findall(r'\d+', content)
-    n = int(size[0])
-    m = int(size[1])
-    # print(n,m)
-    maze = []
-    for i in range(0, m):
-        content = f.readline()
-        arrNum = re.findall(r'\d+', content)
-        llen = len(arrNum)
-        for j in range(0, llen):
-            arrNum[j] = int(arrNum[j])
-        maze.append(arrNum)
-    content = f.readline()
-    size = re.findall(r'\d+', content)
-    initialX = int(size[0])
-    initialY = int(size[1])
-    return maze, initialX, initialY, m, n
-
 
 def plusPadding(maze):
     temp = []
@@ -80,7 +59,6 @@ def heurisicValue(tilePacman, board, direction):
                     if (k == 3):
                         heuristic = -math.inf
                     else:
-                        # print("sssss")
                         heuristic -= 50
             for k in range(0, 7):
                 x = tilePacman[0][k][0]
@@ -106,7 +84,6 @@ def heurisicValue(tilePacman, board, direction):
                     if (k == 3):
                         heuristic = -math.inf
                     else:
-                        # print("sssss")
                         heuristic -= 50
             for k in range(0, 7):
                 x = tilePacman[6][k][0]
@@ -116,7 +93,6 @@ def heurisicValue(tilePacman, board, direction):
                 elif (board[x][y] == 3):
                     heuristic -= 100
         elif (direction[i] == "left"):
-            # print("ddddd")
             for k in range(2, 5):
                 x = tilePacman[k][2][0]
                 y = tilePacman[k][2][1]

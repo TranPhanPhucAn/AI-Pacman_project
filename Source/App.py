@@ -189,11 +189,56 @@ class App:
     def level4(self, map, pacman):
 
         inf = getInfo(map)
+        monsters = inf[0]
+        numOfFood = inf[1]
+        map_copy = copy.deepcopy(map)
+        monstersPos = copy.deepcopy(monsters)  # không làm ảnh hưởng mảng gốc
 
-        output = level4(map, inf[1], inf[0], pacman)
-        point = output[0]
-        path = output[1]
-        path_ghost = output[2]
+        # khởi tạo mảng để lưu bước đi của monster
+        monstersMoveList = []
+        if monsters:
+            for i in range(len(monsters)):
+                monstersMoveList.append([])
+                monstersMoveList[i].append(monsters[i])
+        pacmanMoveList = [pacman]
+        numEaten = 0
+        while numOfFood > 0:
+            output = pacmanMove_max(map_copy, pacmanMoveList[-1], pacmanMoveList[-1], monstersPos, numOfFood, 0, [])
+
+            # print(len(output[1]), output[1], output[2])
+
+            if not output[1]:
+                print("stop by break")
+                break
+
+            numOfFood -= output[0]
+
+            numEaten += output[0]
+
+            temp = output[1].pop(0)
+            pacmanMoveList = pacmanMoveList + output[1]
+            for p in output[1]:
+                for m in range(len(monstersMoveList)):
+                    monstersMoveList[m].append(monstersMove(map, monstersMoveList[m][-1], p))
+            for y in range(len(monstersMoveList)):
+                monstersPos[y] = monstersMoveList[y][-1]
+
+            map_copy = copy.deepcopy(map)
+            for x in pacmanMoveList:
+                map_copy[x[0]][x[1]] = 0
+
+            if output[2] == "collide":
+                break
+
+            if output[2] == "no option":
+                pacmanMoveList = pacmanMoveList + [temp]
+                for m in range(len(monstersMoveList)):
+                    monstersMoveList[m].append(monstersMove(map, monstersMoveList[m][-1], temp))
+
+                break
+        point = numEaten
+        path = pacmanMoveList
+        path_ghost = monstersMoveList
         return path
 def show(App: App):
     n, m, matrix, pacman, level, map_name = handle_input()

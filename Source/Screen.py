@@ -1,6 +1,6 @@
 from level3 import *
-from level4 import *
 from constants import *
+import pygame
 
 
 def initGameScreen():
