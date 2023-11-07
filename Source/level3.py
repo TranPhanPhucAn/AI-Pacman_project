@@ -34,9 +34,9 @@ def inputMaze(filename):
 
 def plusPadding(maze):
     temp = []
-    for i in range(0, 36):
+    for i in range(0, len(maze[0]) + 4):
         temp.append(1)
-    for i in range(0, 11):
+    for i in range(0, len(maze)):
         maze[i].append(1)
         maze[i].append(1)
         maze[i].insert(0, 1)
