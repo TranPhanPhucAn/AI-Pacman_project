@@ -161,18 +161,51 @@ class App:
 
     def level3(self, matrix, pacman):
         currghost, initialghost = [], []
-        food = 0
+        numfood = 0
         for i in range(len(matrix)):
             for j in range(len(matrix[0])):
                 if matrix[i][j] == 3:
                     currghost.append([i + 2, j + 2])
                     initialghost.append([i + 2, j + 2])
                 if matrix[i][j] == 2:
-                    food += 1
+                    numfood += 1
         pacman[0] += 2
         pacman[1] += 2
         board = plusPadding(copy.deepcopy(matrix))
-        actionsPacman, path_ghost = ingame(pacman, board, currghost, initialghost, food)
+
+        def ingame(pacman, board, currghost, initialghost, numfood):
+            actionsForPacman = []
+            actionsForGhost = []
+            visited = []
+            actionPacman = copy.deepcopy(pacman)
+            remembered = copy.deepcopy(pacman)
+            recursion = 0
+            while (True):
+                visited.append(actionPacman)
+                actionPacman, remembered = localsearch(board, actionPacman, remembered, visited)
+                actionsForPacman.append(actionPacman)
+                oldpos = copy.deepcopy(currghost)
+                actionGhost, oldpos = monsterMove(currghost, initialghost, board)
+                actionsForGhost.append(actionGhost)
+                for i in range(0, len(actionGhost)):
+                    x = actionGhost[i][0]
+                    y = actionGhost[i][1]
+                    currghost[i][0] = x
+                    currghost[i][1] = y
+                    board[x][y] = 3
+                    board[oldpos[i][0]][oldpos[i][1]] = 0
+                if (board[actionPacman[0]][actionPacman[1]] == 2):
+                    numfood -= 1
+                    board[actionPacman[0]][actionPacman[1]] = 0
+                checkGame = checkStateGame(numfood, actionPacman, board)
+                if (checkGame == 1):
+                    return actionsForPacman, actionsForGhost
+                elif (checkGame == 2):
+                    return actionsForPacman, actionsForGhost
+                recursion += 1
+            return actionsForPacman, actionsForGhost
+        actionsPacman, path_ghost = ingame(pacman, board, currghost, initialghost, numfood)
+
         path = []
         for item in actionsPacman:
             temp = []
@@ -253,7 +286,6 @@ def show(App: App):
         path, path_ghost = App.level3(matrix, pacman)
     elif level == 4:
         path = App.level4(matrix, pacman)
-
 
     # Trả về kích thước x, y, vị trí pacman, điểm, path_ghost, level
     return n, m, matrix, pacman, point, path, path_ghost, level

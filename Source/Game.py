@@ -1,7 +1,7 @@
 from Pacman import Pacman
 from Sprite import Sprite
 from Wall import Wall
-from Ghost import Ghost
+from Ghost import *
 from Food import Food
 from constants import *
 

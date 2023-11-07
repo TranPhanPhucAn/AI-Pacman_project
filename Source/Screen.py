@@ -1,4 +1,4 @@
-from level3 import *
+
 from constants import *
 import pygame
 

@@ -1,5 +1,10 @@
 import Menu
 import sys
+import random
+import copy
+import re
+import Algorithm
+
 def handle_input():
     level, map = Menu.init_menu()
     level = int(level)
@@ -72,10 +77,123 @@ def monstersMove(map, monsterPos, pacman):
 
     return option[shortest]
 
-
-
 def checkColision(pacman, monsters):
     for m in monsters:
         if m[0] == pacman[0] and m[1] == pacman[1]:
             return True
     return False
+
+def inputMaze(filename):
+    f = open(filename, mode='r')
+    content = f.readline()
+    size = re.findall(r'\d+', content)
+    n = int(size[0])
+    m = int(size[1])
+    # print(n,m)
+    maze = []
+    for i in range(0, m):
+        content = f.readline()
+        arrNum = re.findall(r'\d+', content)
+        llen = len(arrNum)
+        for j in range(0, llen):
+            arrNum[j] = int(arrNum[j])
+        maze.append(arrNum)
+    content = f.readline()
+    size = re.findall(r'\d+', content)
+    initialX = int(size[0])
+    initialY = int(size[1])
+    return maze, initialX, initialY, m, n
+
+
+def plusPadding(maze):
+    temp = []
+    for i in range(0, len(maze[0]) + 4):
+        temp.append(1)
+    for i in range(0, len(maze)):
+        maze[i].append(1)
+        maze[i].append(1)
+        maze[i].insert(0, 1)
+        maze[i].insert(0, 1)
+    maze.append(temp)
+    maze.append(temp)
+    maze.insert(0, temp)
+    maze.insert(0, temp)
+    return maze
+
+
+def createNewBoard(board, pacman):
+    tileFull = []
+    x = pacman[0]
+    y = pacman[1]
+    for i in range(-3, 4):
+        tilePacman = [[x + i, y - 3], [x + i, y - 2], [x + i, y - 1], [x + i, y], [x + i, y + 1], [x + i, y + 2],
+                      [x + i, y + 3]]
+        tileFull.append(tilePacman)
+    return tileFull
+
+def createPacmanTile(pacman):
+    i = pacman[0]
+    j = pacman[1]
+    maze = [[i, j - 1], [i, j + 1], [i - 1, j], [i + 1, j]]
+    return maze
+
+
+def availableTilePacman(board, maze, remembered):
+    available = []
+    direction = []
+    for i in range(0, 4):
+        x = maze[i][0]
+        y = maze[i][1]
+        # print(x,y)
+        if (board[x][y] != 1):
+            available.append([x, y])
+            if (i == 0):
+                direction.append("left")
+            elif (i == 1):
+                direction.append("right")
+            elif (i == 2):
+                direction.append("up")
+            elif (i == 3):
+                direction.append("down")
+    return available, direction
+
+def checkStateGame(numfood, pacman, board):
+    if (numfood == 0):
+        return 1
+    if (board[pacman[0]][pacman[1]] == 3):
+        return 2
+
+def monsterMove(currghost, initialGhost, board):
+    available = []
+    available2 = []
+    newpos = []
+    oldpos = copy.deepcopy(currghost)
+    for index in range(0, len(currghost)):
+        i = currghost[index][0]
+        j = currghost[index][1]
+        initialX = initialGhost[index][0]
+        initialY = initialGhost[index][1]
+        if (i == initialX and j == initialY):
+            available.append([i - 1, j])
+            available.append([i + 1, j])
+            available.append([i, j - 1])
+            available.append([i, j + 1])
+        elif (i == initialX + 1 or i == initialX - 1):
+            available.append([initialX, initialY])
+        elif (j == initialY - 1 or j == initialY + 1):
+            available.append([initialX, initialY])
+        for k in range(0, len(available)):
+            x = available[k][0]
+            y = available[k][1]
+            if (board[x][y] != 1):
+                available2.append([x, y])
+        if (len(available2) > 1):
+            randomchoice = random.randint(0, len(available2) - 1)
+        else:
+            randomchoice = 0
+        randomVal = available2[randomchoice]
+        available2.clear()
+        available.clear()
+        newpos.append(randomVal)
+    return newpos, oldpos
+
