@@ -39,9 +39,8 @@ class App:
                     ghost.draw()
                 break
             if level == 1:
-                self.level1(matrix, pacman, n, m)
+                pass
             if level == 2:
-                self.level2(matrix, pacman, n, m)
                 for ghost in game.Ghosts:
                     ghost.draw()
             elif level == 3:
@@ -160,20 +159,7 @@ class App:
                     queue.put((cost[item] + manhattan_dis(item[0], item[1], end[0], end[1]), item))
                     temp_path[item] = v
 
-    # def level3(self):
-    #
-    # def level4(self):
-
-def show(App: App):
-    n, m, matrix, pacman, level, map_name = handle_input()
-    path_ghost = None
-    point = 0
-    path = []
-    if level == 1:
-        path = App.level1(matrix, pacman, n, m)
-    elif level == 2:
-        path = App.level2(matrix, pacman, n, m)
-    elif level == 3:
+    def level3(self, matrix, pacman):
         currghost, initialghost = [], []
         food = 0
         for i in range(len(matrix)):
@@ -199,10 +185,8 @@ def show(App: App):
                 path_ghost[i][j][1] -= 2
         pacman[0] -= 2
         pacman[1] -= 2
-    elif level == 4:
-
-        path_file = str(map_name)
-        map = readFile(path_file)  # bug here
+        return path, path_ghost
+    def level4(self, map, pacman):
 
         inf = getInfo(map)
 
@@ -210,6 +194,21 @@ def show(App: App):
         point = output[0]
         path = output[1]
         path_ghost = output[2]
+        return path
+def show(App: App):
+    n, m, matrix, pacman, level, map_name = handle_input()
+    path_ghost = None
+    point = 0
+    path = []
+    if level == 1:
+        path = App.level1(matrix, pacman, n, m)
+    elif level == 2:
+        path = App.level2(matrix, pacman, n, m)
+    elif level == 3:
+        path, path_ghost = App.level3(matrix, pacman)
+    elif level == 4:
+        path = App.level4(matrix, pacman)
+
 
     # Trả về kích thước x, y, vị trí pacman, điểm, path_ghost, level
     return n, m, matrix, pacman, point, path, path_ghost, level
