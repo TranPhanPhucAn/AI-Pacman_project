@@ -1,8 +1,6 @@
 import pygame
 from constants import *
 
-
-
 def init_menu():
     window_size = (SCREEN_WIDTH, SCREEN_HEIGHT)
     screen = pygame.display.set_mode(window_size)

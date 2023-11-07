@@ -17,7 +17,6 @@ def initGameScreen():
 # Set screen, game
 screen, clock = initGameScreen()
 
-
 def drawScore(size, game):
     text_font = pygame.font.SysFont("Comic Sans MS", 36)
     surface = pygame.Surface((10 * one_block_size, 2 * one_block_size))
@@ -25,9 +24,6 @@ def drawScore(size, game):
     screen.blit(surface, ((3 * one_block_size, size * one_block_size)))
     score = text_font.render(f'Score: {game.Point}', True, (255, 255, 255))
     screen.blit(score, (one_block_size, size * one_block_size))
-
-
-
 
 def drawFinish(state):
     if state == WIN:

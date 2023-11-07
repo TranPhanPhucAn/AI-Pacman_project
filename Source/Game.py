@@ -42,13 +42,13 @@ class Game:
     def pacmanMove(self, position):
         newPosition = position
         if (newPosition[0] - self.Player.currentPosition[0] == 1):
-            self.Player.set_direction(f'../Assets/pacman_bottom.gif')
+            self.Player.set_direction(f'../Assets/pacman_bottom.png')
         elif newPosition[0] - self.Player.currentPosition[0] == -1:
-            self.Player.set_direction(f'../Assets/pacman_top.gif')
+            self.Player.set_direction(f'../Assets/pacman_top.png')
         elif newPosition[1] - self.Player.currentPosition[1] == 1:
             self.Player.set_direction(f'../Assets/pacman_right.png')
         elif newPosition[1] - self.Player.currentPosition[1] == -1:
-            self.Player.set_direction(f'../Assets/pacman_left.gif')
+            self.Player.set_direction(f'../Assets/pacman_left.png')
         self.Player.changePosition(newPosition)
 
         isPacmanEatFood, foodIndex = self.checkEatFood()
