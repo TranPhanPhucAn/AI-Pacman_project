@@ -3,7 +3,13 @@ import re
 import math
 import copy
 
-
+"""
+    Level 3: Pac-man cannot see the foods if they are outside Pacman’s nearest threestep.
+    It means that Pac-man just only scan all the adjacent him (8 tiles x 3).
+    There are many foods in the map.
+    Monsters just move one step in any valid direction (if any) around the initial location at the start of the game.
+    Each step Pacman go, each step Monsters move.
+"""
 def inputMaze(filename):
     f = open(filename, mode='r')
     content = f.readline()
@@ -127,7 +133,6 @@ def heurisicValue(tilePacman, board, direction):
                     if (k == 3):
                         heuristic = -math.inf
                     else:
-                        # print("sssss")
                         heuristic -= 50
             for k in range(0, 7):
                 x = tilePacman[k][0][0]
@@ -153,7 +158,6 @@ def heurisicValue(tilePacman, board, direction):
                     if (k == 3):
                         heuristic = -math.inf
                     else:
-                        # print("sssss")
                         heuristic -= 50
             for k in range(0, 7):
                 x = tilePacman[k][6][0]
@@ -176,8 +180,6 @@ def createPacmanTile(pacman):
 def availableTilePacman(board, maze, remembered):
     available = []
     direction = []
-    # print(remembered)
-    # print(maze)
     for i in range(0, 4):
         x = maze[i][0]
         y = maze[i][1]
@@ -285,7 +287,6 @@ def ingame(pacman, board, currghost, initialghost, numfood):
             currghost[i][0] = x
             currghost[i][1] = y
             board[x][y] = 3
-            # print(board[x][y])
             board[oldpos[i][0]][oldpos[i][1]] = 0
         if (board[actionPacman[0]][actionPacman[1]] == 2):
             numfood -= 1

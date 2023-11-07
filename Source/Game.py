@@ -54,7 +54,6 @@ class Game:
         isPacmanEatFood, foodIndex = self.checkEatFood()
         if isPacmanEatFood:
             self.Point += 20
-            # self.Matrix[self.Foods[foodIndex].currentPosition[0]][self.Foods[foodIndex].currentPosition[1]] = 0
             self.Foods.pop(foodIndex)
 
         self.Point -= 1
