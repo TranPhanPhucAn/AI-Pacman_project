@@ -5,6 +5,7 @@ import copy
 import re
 import Algorithm
 
+
 def handle_input():
     level, map = Menu.init_menu()
     level = int(level)
@@ -40,6 +41,7 @@ def handle_input():
     pos = [x, y]
 
     return size_x, size_y, MAP, pos, level, map_name
+
 
 def getInfo(map):
     monsters = []
@@ -77,11 +79,13 @@ def monstersMove(map, monsterPos, pacman):
 
     return option[shortest]
 
+
 def checkColision(pacman, monsters):
     for m in monsters:
         if m[0] == pacman[0] and m[1] == pacman[1]:
             return True
     return False
+
 
 def inputMaze(filename):
     f = open(filename, mode='r')
@@ -131,6 +135,7 @@ def createNewBoard(board, pacman):
         tileFull.append(tilePacman)
     return tileFull
 
+
 def createPacmanTile(pacman):
     i = pacman[0]
     j = pacman[1]
@@ -157,11 +162,13 @@ def availableTilePacman(board, maze, remembered):
                 direction.append("down")
     return available, direction
 
+
 def checkStateGame(numfood, pacman, board):
     if (numfood == 0):
         return 1
     if (board[pacman[0]][pacman[1]] == 3):
         return 2
+
 
 def monsterMove(currghost, initialGhost, board):
     available = []
@@ -196,4 +203,3 @@ def monsterMove(currghost, initialGhost, board):
         available.clear()
         newpos.append(randomVal)
     return newpos, oldpos
-

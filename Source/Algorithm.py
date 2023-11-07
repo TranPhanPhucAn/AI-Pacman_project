@@ -1,11 +1,12 @@
 from queue import PriorityQueue
 import copy
-from utils import *
+from Utils import *
 import math
 
 
 def manhattan_dis(start_x, start_y, des_x, des_y):
     return (abs(des_x - start_x) + abs(start_y - des_y))
+
 
 def heurisicValue(tilePacman, board, direction):
     heuristicVal = []
@@ -145,6 +146,7 @@ def localsearch(board, pacman, remembered, visited):
     remembered[1] = pacman[1]
     return available[index], remembered
 
+
 # hàm max cỉa minimax
 def pacmanMove_max(map, currentPos, lastPos, monsters, numOfFood, score, trace):
     trace2 = copy.deepcopy(trace)
@@ -207,4 +209,3 @@ def pacmanMove_min(map, currentPos, lastPos, monsters, numOfFood, score, trace):
 
     result = pacmanMove_max(copy.deepcopy(map), currentPos, lastPos, copy.deepcopy(monsters), numOfFood, score, trace2)
     return result
-

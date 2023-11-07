@@ -1,6 +1,7 @@
 import pygame
 from constants import *
 
+
 def init_menu():
     window_size = (SCREEN_WIDTH, SCREEN_HEIGHT)
     screen = pygame.display.set_mode(window_size)
@@ -84,4 +85,5 @@ def init_menu():
                 draw_list(list_item, selected_item, 60)
 
         return level, map
+
     return menu_list(menu_items)

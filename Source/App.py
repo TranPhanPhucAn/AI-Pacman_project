@@ -3,7 +3,8 @@ from Game import Game
 from Screen import *
 import time
 from Algorithm import *
-from utils import *
+from Utils import *
+
 
 class App:
     def __init__(self):
@@ -23,8 +24,8 @@ class App:
             sys.exit(1)
         screen, clock = initGameScreen()
         # game = Game(matrix, pacman)
-        if level==4:
-            game = Game(matrix, pacman,monsters)
+        if level == 4:
+            game = Game(matrix, pacman, monsters)
         else:
             game = Game(matrix, pacman)
         game.Player.draw()
@@ -235,6 +236,7 @@ class App:
         pacman[0] -= 2
         pacman[1] -= 2
         return path, path_ghost
+
     def level4(self, map, pacman):
         inf = getInfo(map)
         monsters = inf[0]
@@ -288,6 +290,8 @@ class App:
         path = pacmanMoveList
         path_ghost = monstersMoveList
         return path, path_ghost, point, monsters
+
+
 def show(App: App):
     n, m, matrix, pacman, level, map_name = handle_input()
     path_ghost = None

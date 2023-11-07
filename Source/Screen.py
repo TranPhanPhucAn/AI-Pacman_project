@@ -1,4 +1,3 @@
-
 from constants import *
 import pygame
 
@@ -14,8 +13,10 @@ def initGameScreen():
 
     return screen, clock
 
+
 # Set screen, game
 screen, clock = initGameScreen()
+
 
 def drawScore(size, game):
     text_font = pygame.font.SysFont("Comic Sans MS", 36)
@@ -24,6 +25,7 @@ def drawScore(size, game):
     screen.blit(surface, ((3 * one_block_size, size * one_block_size)))
     score = text_font.render(f'Score: {game.Point}', True, (255, 255, 255))
     screen.blit(score, (one_block_size, size * one_block_size))
+
 
 def drawFinish(state):
     if state == WIN:
@@ -36,4 +38,3 @@ def drawFinish(state):
         image = pygame.transform.scale(image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
     screen.blit(image, (0, 0))
-

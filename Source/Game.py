@@ -13,10 +13,10 @@ class Game:
     Player = -1
     Point = 0
 
-    def __init__(self, Matrix, pacman, monsters = []) -> None:
+    def __init__(self, Matrix, pacman, monsters=[]) -> None:
         self.Player = Pacman(pacman)
         for i in monsters:
-            temp=Ghost(i)
+            temp = Ghost(i)
             self.Ghosts.append(temp)
 
         for row in range(len(Matrix)):
