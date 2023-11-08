@@ -84,7 +84,6 @@ class App:
                 break
             time.sleep(0.1)
             clock.tick(30)
-        print(path)
         drawFinish(state)
         pygame.display.update()
         time.sleep(5)
@@ -94,28 +93,18 @@ class App:
             for j in range(size_x):
                 if MAP[i][j] == 2:
                     return (i, j)
-
+    # DFS Search
     def level1(self, MAP, pos, size_x, size_y):
-        visited = []
+        visited = set()
         path = []
-        temp_path = {}
-        queue = PriorityQueue()
-        beg = (pos[0], pos[1])
-        end = self.detec_food(MAP, size_x, size_y)
-        queue.put((manhattan_dis(pos[0], pos[1], end[0], end[1]), beg))
-        cost = {}
-        cost[beg] = 0
-        while queue != None:
-            v = queue.get()[1]
-            visited.append(v)
-            neighbor = []
-            if (v == end):
+
+        def DFS(v):
+            if v == end:
                 path.append(v)
-                while v != beg:
-                    v = temp_path[v]
-                    path.append(v)
-                path.reverse()
-                return path
+                return True
+            visited.add(v)
+            neighbor = []
+
             if v[0] - 1 >= 0 and MAP[v[0] - 1][v[1]] != 1:
                 neighbor_cur = (v[0] - 1, v[1])
                 neighbor.append(neighbor_cur)
@@ -128,12 +117,21 @@ class App:
             if v[1] + 1 < size_x - 1 and MAP[v[0]][v[1] + 1] != 1:
                 neighbor_cur = (v[0], v[1] + 1)
                 neighbor.append(neighbor_cur)
-            for item in neighbor:
-                if item not in visited:
-                    cost[item] = cost[v] + 1
-                    queue.put((cost[item] + manhattan_dis(item[0], item[1], end[0], end[1]), item))
-                    temp_path[item] = v
 
+            for item in neighbor:
+                if item not in visited and DFS(item):
+                    path.append(v)
+                    return True
+
+        beg = (pos[0], pos[1])
+        end = self.detec_food(MAP, size_x, size_y)
+
+        if DFS(beg):
+            path.reverse()
+            return path
+        else:
+            return None
+    # Greedy BFS Search
     def level2(self, MAP, pos, size_x, size_y):
         visited = []
         path = []
@@ -173,6 +171,7 @@ class App:
                     temp_path[item] = v
 
     def level3(self, matrix, pacman):
+
         currghost, initialghost = [], []
         numfood = 0
         for i in range(len(matrix)):
@@ -287,18 +286,18 @@ class App:
 
 
 def process(App: App):
-    n, m, matrix, pacman, level, map_name = handle_input()
+    n, m, matrix, pos, level, map_name = handle_input()
     path_ghost = None
     point = 0
     path = []
     if level == 1:
-        path = App.level1(matrix, pacman, n, m)
+        path = App.level1(matrix, pos, n, m)
     elif level == 2:
-        path = App.level2(matrix, pacman, n, m)
+        path = App.level2(matrix, pos, n, m)
     elif level == 3:
-        path, path_ghost = App.level3(matrix, pacman)
+        path, path_ghost = App.level3(matrix, pos)
     elif level == 4:
-        path, path_ghost, point, monsters = App.level4(matrix, pacman)
-        return [n, m, matrix, pacman, point, path, path_ghost, level, monsters]
+        path, path_ghost, point, monsters = App.level4(matrix, pos)
+        return [n, m, matrix, pos, point, path, path_ghost, level, monsters]
 
-    return [n, m, matrix, pacman, point, path, path_ghost, level]
+    return [n, m, matrix, pos, point, path, path_ghost, level]
