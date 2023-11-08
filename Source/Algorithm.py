@@ -148,64 +148,62 @@ def localsearch(board, pacman, remembered, visited):
 
 
 
-def pacmanMove_max(map, currentPos, lastPos, monsters, numOfFood, score, trace):
-    trace2 = copy.deepcopy(trace)
-    trace2.append(currentPos)  # thêm vào mảng trace để trả về kết quả cuối cùng
+def max_value(game_map, current_position, last_position, monsters, num_of_food, current_score, path_trace):
+    path_trace_updated = path_trace + [current_position]
 
-    # nếu trong các lựa chọn để đi có đụng monster
-    if checkColision(currentPos, monsters) or len(trace) > 20:
-        return (score, trace2, "collide")
+    if checkColision(current_position, monsters) or len(path_trace) > 20:
+        return (current_score, path_trace_updated, "collide")
 
-    if map[currentPos[0]][currentPos[1]] == 2:
-        numOfFood -= 1
-        score += 1
-        map[currentPos[0]][currentPos[1]] = 0
-        return (score, trace2, "found 1 food")
+    if game_map[current_position[0]][current_position[1]] == 2:
+        num_of_food -= 1
+        current_score += 1
+        game_map[current_position[0]][current_position[1]] = 0
+        return (current_score, path_trace_updated, "found 1 food")
 
-    if numOfFood == 0:
-        return (score, trace2, "out of food")
+    if num_of_food == 0:
+        return (current_score, path_trace_updated, "out of food")
 
-    option = []
+    neighbors = []
 
-    if map[currentPos[0] - 1][currentPos[1]] != 1 and map[currentPos[0] - 1][currentPos[1]] != 3:
-        option.append((currentPos[0] - 1, currentPos[1]))
-    if map[currentPos[0]][currentPos[1] + 1] != 1 and map[currentPos[0]][currentPos[1] + 1] != 3:
-        option.append((currentPos[0], currentPos[1] + 1))
-    if map[currentPos[0] + 1][currentPos[1]] != 1 and map[currentPos[0] + 1][currentPos[1]] != 3:
-        option.append((currentPos[0] + 1, currentPos[1]))
-    if map[currentPos[0]][currentPos[1] - 1] != 1 and map[currentPos[0]][currentPos[1] - 1] != 3:
-        option.append((currentPos[0], currentPos[1] - 1))
+
+    if game_map[current_position[0] - 1][current_position[1]] != 1 and game_map[current_position[0] - 1][current_position[1]] != 3:
+        neighbors.append((current_position[0] - 1, current_position[1]))
+    if game_map[current_position[0]][current_position[1] + 1] != 1 and game_map[current_position[0]][current_position[1] + 1] != 3:
+        neighbors.append((current_position[0], current_position[1] + 1))
+    if game_map[current_position[0] + 1][current_position[1]] != 1 and game_map[current_position[0] + 1][current_position[1]] != 3:
+        neighbors.append((current_position[0] + 1, current_position[1]))
+    if game_map[current_position[0]][current_position[1] - 1] != 1 and game_map[current_position[0]][current_position[1] - 1] != 3:
+        neighbors.append((current_position[0], current_position[1] - 1))
 
     for m in monsters:
-        for i in option:
+        for i in neighbors:
             if i[0] == m[0] and i[1] == m[1]:
-                option.pop(option.index(i))
+                neighbors.pop(neighbors.index(i))
 
-    if not option:
-        return (score, trace2, "no option")
+    if not neighbors:
+        return (current_score, path_trace_updated, "no option")
     else:
-        for i in option:
-            if i == lastPos:
-                option.pop(option.index(i))
+        for i in neighbors:
+            if i == last_position:
+                neighbors.pop(neighbors.index(i))
+
+    best_result = (-math.inf, [])
+    for neighbor in neighbors:
+        result = min_value(copy.deepcopy(game_map), neighbor, current_position, copy.deepcopy(monsters), num_of_food, current_score, path_trace_updated)
+        if result[0] > best_result[0]:
+            best_result = result
+        elif result[0] == best_result[0] and len(result[1]) < len(best_result[1]):
+            best_result = result
+    return best_result
 
 
-    result = (-math.inf, [])
-    for x in option:
-        output = pacmanMove_min(copy.deepcopy(map), x, currentPos, copy.deepcopy(monsters), numOfFood, score, trace2)
-        if output[0] > result[0]:
-            result = output
-        elif output[0] == result[0] and len(output[1]) < len(result[1]):
-            result = output
-
-    return result
 
 
-
-def pacmanMove_min(map, currentPos, lastPos, monsters, numOfFood, score, trace):
-    trace2 = copy.deepcopy(trace)
+def min_value(game_map, current_position, last_position, monsters, num_of_food, current_score, path_trace):
+    path_trace_updated = path_trace
 
     for i in range(len(monsters)):
-        monsters[i] = monstersMove(map, monsters[i], currentPos)
+        monsters[i] = monstersMove(game_map, monsters[i], current_position)
 
-    result = pacmanMove_max(copy.deepcopy(map), currentPos, lastPos, copy.deepcopy(monsters), numOfFood, score, trace2)
-    return result
+    best_result = max_value(copy.deepcopy(game_map), current_position, last_position, copy.deepcopy(monsters), num_of_food, current_score, path_trace_updated)
+    return best_result

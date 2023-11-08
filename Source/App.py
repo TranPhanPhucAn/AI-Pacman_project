@@ -238,9 +238,7 @@ class App:
         monsters = inf[0]
         numOfFood = inf[1]
         map_copy = copy.deepcopy(map)
-        monstersPos = copy.deepcopy(monsters)  # không làm ảnh hưởng mảng gốc
-
-        # khởi tạo mảng để lưu bước đi của monster
+        monstersPos = copy.deepcopy(monsters)
         monstersMoveList = []
         if monsters:
             for i in range(len(monsters)):
@@ -249,7 +247,7 @@ class App:
         pacmanMoveList = [pacman]
         numEaten = 0
         while numOfFood > 0:
-            output = pacmanMove_max(map_copy, pacmanMoveList[-1], pacmanMoveList[-1], monstersPos, numOfFood, 0, [])
+            output = max_value(map_copy, pacmanMoveList[-1], pacmanMoveList[-1], monstersPos, numOfFood, 0, [])
             if not output[1]:
                 print("stop by break")
                 break
