@@ -147,7 +147,7 @@ def localsearch(board, pacman, remembered, visited):
     return available[index], remembered
 
 
-# hàm max cỉa minimax
+
 def pacmanMove_max(map, currentPos, lastPos, monsters, numOfFood, score, trace):
     trace2 = copy.deepcopy(trace)
     trace2.append(currentPos)  # thêm vào mảng trace để trả về kết quả cuối cùng
@@ -165,8 +165,8 @@ def pacmanMove_max(map, currentPos, lastPos, monsters, numOfFood, score, trace):
     if numOfFood == 0:
         return (score, trace2, "out of food")
 
-    option = []  # các lựa chọn để đi
-    # thêm các ô lân cận nếu không phải tường và quái vật
+    option = []
+
     if map[currentPos[0] - 1][currentPos[1]] != 1 and map[currentPos[0] - 1][currentPos[1]] != 3:
         option.append((currentPos[0] - 1, currentPos[1]))
     if map[currentPos[0]][currentPos[1] + 1] != 1 and map[currentPos[0]][currentPos[1] + 1] != 3:
@@ -188,7 +188,7 @@ def pacmanMove_max(map, currentPos, lastPos, monsters, numOfFood, score, trace):
             if i == lastPos:
                 option.pop(option.index(i))
 
-    # trả về option đi để có điểm lớn nhất
+
     result = (-math.inf, [])
     for x in option:
         output = pacmanMove_min(copy.deepcopy(map), x, currentPos, copy.deepcopy(monsters), numOfFood, score, trace2)
@@ -200,11 +200,11 @@ def pacmanMove_max(map, currentPos, lastPos, monsters, numOfFood, score, trace):
     return result
 
 
-# hàm min của minimax
+
 def pacmanMove_min(map, currentPos, lastPos, monsters, numOfFood, score, trace):
     trace2 = copy.deepcopy(trace)
 
-    for i in range(len(monsters)):  # cập nhật lại vị trí mới của quái vật trong mảng monster
+    for i in range(len(monsters)):
         monsters[i] = monstersMove(map, monsters[i], currentPos)
 
     result = pacmanMove_max(copy.deepcopy(map), currentPos, lastPos, copy.deepcopy(monsters), numOfFood, score, trace2)
