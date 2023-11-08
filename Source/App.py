@@ -142,8 +142,7 @@ class App:
         beg = (pos[0], pos[1])
         end = self.detec_food(MAP, size_x, size_y)
         queue.put((manhattan_dis(pos[0], pos[1], end[0], end[1]), beg))
-        cost = {}
-        cost[beg] = 0
+
         while queue != None:
             v = queue.get()[1]
             visited.append(v)
@@ -169,8 +168,8 @@ class App:
                 neighbor.append(neighbor_cur)
             for item in neighbor:
                 if item not in visited:
-                    cost[item] = cost[v] + 1
-                    queue.put((cost[item] + manhattan_dis(item[0], item[1], end[0], end[1]), item))
+
+                    queue.put((manhattan_dis(item[0], item[1], end[0], end[1]), item))
                     temp_path[item] = v
 
     def level3(self, matrix, pacman):

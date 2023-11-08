@@ -17,5 +17,3 @@ class Sprite:
     def draw(self):
         screen.blit(self.surface, (self.currentPosition[1] * one_block_size, self.currentPosition[0] * one_block_size))
 
-    def display(self):
-        screen.blit(self.surface, (self.currentPosition[1] * one_block_size, self.currentPosition[0] * one_block_size))

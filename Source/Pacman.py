@@ -7,8 +7,8 @@ class Pacman(Sprite):
 
     def __init__(self, position) -> None:
         super().__init__(position)
-        self.display()
+        self.draw()
 
     def set_direction(self, path):
         self.surface = pygame.image.load(path)
-        self.display()
+        self.draw()

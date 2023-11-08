@@ -6,4 +6,4 @@ class Wall(Sprite):
     def __init__(self, position) -> None:
         super().__init__(position)
         self.surface = pygame.image.load(f'../Assets/wall_img.png')
-        self.display()
+        self.draw()
