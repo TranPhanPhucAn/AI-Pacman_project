@@ -87,28 +87,6 @@ def checkColision(pacman, monsters):
     return False
 
 
-def inputMaze(filename):
-    f = open(filename, mode='r')
-    content = f.readline()
-    size = re.findall(r'\d+', content)
-    n = int(size[0])
-    m = int(size[1])
-    # print(n,m)
-    maze = []
-    for i in range(0, m):
-        content = f.readline()
-        arrNum = re.findall(r'\d+', content)
-        llen = len(arrNum)
-        for j in range(0, llen):
-            arrNum[j] = int(arrNum[j])
-        maze.append(arrNum)
-    content = f.readline()
-    size = re.findall(r'\d+', content)
-    initialX = int(size[0])
-    initialY = int(size[1])
-    return maze, initialX, initialY, m, n
-
-
 def plusPadding(maze):
     temp = []
     for i in range(0, len(maze[0]) + 4):

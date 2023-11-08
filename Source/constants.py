@@ -3,7 +3,7 @@ one_block_size = 30
 SCREEN_HEIGHT = 20 * one_block_size
 SCREEN_WIDTH = SCREEN_HEIGHT * 2
 
-# SOME VARIABLE
+# Some variable
 GAME_NAME = 'Pacman'
 FPS = 30
 

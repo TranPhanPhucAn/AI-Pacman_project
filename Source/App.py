@@ -8,8 +8,7 @@ from Utils import *
 
 class App:
     def __init__(self):
-        # n, m, matrix, pacman, point, path, path_ghost, level = show(self)
-        a = show(self)
+        a = process(self)
         n = a[0]
         m = a[1]
         matrix = a[2]
@@ -23,7 +22,6 @@ class App:
         if m is None or n is None:
             sys.exit(1)
         screen, clock = initGameScreen()
-        # game = Game(matrix, pacman)
         if level == 4:
             game = Game(matrix, pacman, monsters)
         else:
@@ -254,9 +252,6 @@ class App:
         numEaten = 0
         while numOfFood > 0:
             output = pacmanMove_max(map_copy, pacmanMoveList[-1], pacmanMoveList[-1], monstersPos, numOfFood, 0, [])
-
-            # print(len(output[1]), output[1], output[2])
-
             if not output[1]:
                 print("stop by break")
                 break
@@ -292,7 +287,7 @@ class App:
         return path, path_ghost, point, monsters
 
 
-def show(App: App):
+def process(App: App):
     n, m, matrix, pacman, level, map_name = handle_input()
     path_ghost = None
     point = 0
@@ -307,5 +302,4 @@ def show(App: App):
         path, path_ghost, point, monsters = App.level4(matrix, pacman)
         return [n, m, matrix, pacman, point, path, path_ghost, level, monsters]
 
-    # Trả về kích thước x, y, vị trí pacman, điểm, path_ghost, level
     return [n, m, matrix, pacman, point, path, path_ghost, level]
