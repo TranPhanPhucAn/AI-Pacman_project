@@ -20,7 +20,7 @@ def heurisicValue(tilePacman, board, direction):
                     heuristic += 35
                 elif (board[x][y] == 3):
                     heuristic = -math.inf
-            for k in range(1, 6):
+            for k in range(2, 5):
                 x = tilePacman[1][k][0]
                 y = tilePacman[1][k][1]
                 if (board[x][y] == 2):
@@ -31,13 +31,12 @@ def heurisicValue(tilePacman, board, direction):
                     else:
                         # print("sssss")
                         heuristic -= 50
-            for k in range(0, 7):
-                x = tilePacman[0][k][0]
-                y = tilePacman[0][k][1]
-                if (board[x][y] == 2):
-                    heuristic += 5
-                elif (board[x][y] == 3):
-                    heuristic -= 100
+            x = tilePacman[0][3][0]
+            y = tilePacman[0][3][1]
+            if (board[x][y] == 2):
+                heuristic += 5
+            elif (board[x][y] == 3):
+                heuristic -= 100
         elif (direction[i] == "down"):
             for k in range(2, 5):
                 x = tilePacman[4][k][0]
@@ -46,7 +45,7 @@ def heurisicValue(tilePacman, board, direction):
                     heuristic += 35
                 elif (board[x][y] == 3):
                     heuristic = -math.inf
-            for k in range(1, 6):
+            for k in range(2, 5):
                 x = tilePacman[5][k][0]
                 y = tilePacman[5][k][1]
                 if (board[x][y] == 2):
@@ -55,15 +54,13 @@ def heurisicValue(tilePacman, board, direction):
                     if (k == 3):
                         heuristic = -math.inf
                     else:
-                        # print("sssss")
                         heuristic -= 50
-            for k in range(0, 7):
-                x = tilePacman[6][k][0]
-                y = tilePacman[6][k][1]
-                if (board[x][y] == 2):
-                    heuristic += 5
-                elif (board[x][y] == 3):
-                    heuristic -= 100
+            x = tilePacman[6][3][0]
+            y = tilePacman[6][3][1]
+            if (board[x][y] == 2):
+                heuristic += 5
+            elif (board[x][y] == 3):
+                heuristic -= 100
         elif (direction[i] == "left"):
             # print("ddddd")
             for k in range(2, 5):
@@ -73,7 +70,7 @@ def heurisicValue(tilePacman, board, direction):
                     heuristic += 35
                 elif (board[x][y] == 3):
                     heuristic = -math.inf
-            for k in range(1, 6):
+            for k in range(2, 5):
                 x = tilePacman[k][1][0]
                 y = tilePacman[k][1][1]
                 if (board[x][y] == 2):
@@ -83,13 +80,12 @@ def heurisicValue(tilePacman, board, direction):
                         heuristic = -math.inf
                     else:
                         heuristic -= 50
-            for k in range(0, 7):
-                x = tilePacman[k][0][0]
-                y = tilePacman[k][0][1]
-                if (board[x][y] == 2):
-                    heuristic += 5
-                elif (board[x][y] == 3):
-                    heuristic -= 100
+            x = tilePacman[3][0][0]
+            y = tilePacman[3][0][1]
+            if (board[x][y] == 2):
+                heuristic += 5
+            elif (board[x][y] == 3):
+                heuristic -= 100
         elif (direction[i] == "right"):
             for k in range(2, 5):
                 x = tilePacman[k][4][0]
@@ -98,7 +94,7 @@ def heurisicValue(tilePacman, board, direction):
                     heuristic += 35
                 elif (board[x][y] == 3):
                     heuristic = -math.inf
-            for k in range(1, 6):
+            for k in range(2, 5):
                 x = tilePacman[k][5][0]
                 y = tilePacman[k][5][1]
                 if (board[x][y] == 2):
@@ -108,13 +104,12 @@ def heurisicValue(tilePacman, board, direction):
                         heuristic = -math.inf
                     else:
                         heuristic -= 50
-            for k in range(0, 7):
-                x = tilePacman[k][6][0]
-                y = tilePacman[k][6][1]
-                if (board[x][y] == 2):
-                    heuristic += 5
-                elif (board[x][y] == 3):
-                    heuristic -= 100
+            x = tilePacman[3][6][0]
+            y = tilePacman[3][6][1]
+            if (board[x][y] == 2):
+                heuristic += 5
+            elif (board[x][y] == 3):
+                heuristic -= 100
         heuristicVal.append(heuristic)
     return heuristicVal
 
@@ -131,7 +126,6 @@ def localsearch(board, pacman, remembered, visited):
             countVisited += 1000
         for j in range(0, len(visited)):  # [[f,f],[ff]]
             if (visited[j][0] == available[i][0] and visited[j][1] == available[i][1]):
-                # print("co chay")
                 countVisited += 1
             else:
                 countVisited += 0
